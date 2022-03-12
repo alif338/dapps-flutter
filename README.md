@@ -1,6 +1,6 @@
 # eth_pk_coin
 
-A new Flutter project.
+Simple eth transactions using web3dart packages.
 
 ## Getting Started
 
