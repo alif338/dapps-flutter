@@ -47,9 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     client = LoggingClient(Client());
-    ethClient = Web3Client(
-        'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
-        client);
+    ethClient = Web3Client(dotenv.env['RPC_URL']!, client);
     getBalance(walletAddress);
   }
 
@@ -140,7 +138,6 @@ class _MyHomePageState extends State<MyHomePage> {
             10.heightBox,
             hasData
                 ? "\$$myData".text.bold.xl6.makeCentered()
-                // : CircularProgressIndicator().centered()
                 : "No Data".text.makeCentered()
           ]))
               .p16
