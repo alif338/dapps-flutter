@@ -1,9 +1,9 @@
-// import 'package:eth_pk_coin/fluttertoast.dart';
 import 'package:eth_pk_coin/logging_client.dart';
 import 'package:eth_pk_coin/slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:web3dart/web3dart.dart';
@@ -42,10 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
   late LoggingClient client;
   late Web3Client ethClient;
   String myData = "";
+  FToast fToast = FToast();
 
   @override
   void initState() {
     super.initState();
+    fToast.init(context);
     client = LoggingClient(Client());
     ethClient = Web3Client(dotenv.env['RPC_URL']!, client);
     getBalance(walletAddress);
@@ -87,7 +89,13 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await submit("depositBalance", [bigAmount]);
 
     print("Deposited");
-    // showToast(msg: 'Deposited $myAmount PKCOIN');
+    Fluttertoast.showToast(
+        msg: "Deposited $myAmount PKCoin",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0);
     return response;
   }
 
@@ -96,7 +104,13 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await submit("withdrawlBalance", [bigAmount]);
 
     print("Withdrawed");
-    // showToast(msg: 'Withdrawed $myAmount PKCOIN');
+    Fluttertoast.showToast(
+        msg: "Withdrew $myAmount PKCOIN",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
     return response;
   }
 
@@ -113,7 +127,6 @@ class _MyHomePageState extends State<MyHomePage> {
         function: ethFunction,
         parameters: args,
       ),
-      fetchChainIdFromNetworkId: true,
       chainId: 4
     );
     return result;
